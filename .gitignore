@@ -1,0 +1,14 @@
+node_modules
+.env
+strava-tokens.json
+garmin-token.json
+garmin-data.json
+dist
+*.pdf
+*.jpeg
+*.jpg
+*.png
+*.heic
+EXAMES/
+.DS_Store
+.vercel
