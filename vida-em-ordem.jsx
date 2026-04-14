@@ -114,20 +114,20 @@ const getCarbColor = (dayKey) => LOW_CARB_DAYS.includes(dayKey) ? "#E8845A" : "#
 
 // Plano alimentar — ciclagem de carbo (personalize no código)
 const DIETA_LOW = {
-  "Pós-treino": "Liquidz 1 sachê (dias de corrida)",
+  "Pós-treino": "Isotônico/suplemento intra-treino (dias de corrida)",
   "Café da manhã": "Panqueca banana c/ whey: 1 col aveia + 1 ovo + banana + muçarela + whey 20g + canela + café + creatina 5g",
   "Almoço": "80g arroz/batata + 1 col feijão 70g + 100g frango/85g carne/160g tilápia + folhosos 40g + verduras 60g + legumes 80g",
   "Sobremesa": "2 tabletes chocolate 70% ou 1 laranja/2 kiwis",
-  "Lanche": "Whey DUX 30g + água + 2 porções fruta + leite pó 10g",
-  "Jantar": "Proteína + salada leve. Ceia: Koala Sleep 1 dosador",
+  "Lanche": "Whey protein 30g + água + 2 porções fruta + leite pó 10g",
+  "Jantar": "Proteína + salada leve. Ceia: suplemento para sono",
 };
 const DIETA_CARB = {
-  "Pós-treino": "Liquidz 1 sachê (dias de corrida)",
+  "Pós-treino": "Isotônico/suplemento intra-treino (dias de corrida)",
   "Café da manhã": "Panqueca banana c/ whey + creatina 5g + café (porção maior carbo)",
   "Almoço": "Arroz/batata/macarrão porção maior + feijão + 100g proteína + salada + legumes",
   "Sobremesa": "Fruta ou chocolate 70%",
-  "Lanche": "Whey DUX 30g + fruta ou sanduíche natural (pão+frango+requeijão+muçarela)",
-  "Jantar": "Arroz 80g ou abóbora 210g + proteína + salada. Ceia: Koala Sleep",
+  "Lanche": "Whey protein 30g + fruta ou sanduíche natural (pão+frango+requeijão+muçarela)",
+  "Jantar": "Arroz 80g ou abóbora 210g + proteína + salada. Ceia: suplemento para sono",
 };
 
 const EVENT_TYPES = {
@@ -224,8 +224,8 @@ const BODY_2026 = { peso:59.9, gordura:24.5, magra:45.2, gorduraKg:14.7, musculo
 
 // ── PROFISSIONAIS ────────────────────────────────────────────────────────────
 const PROFISSIONAIS = [
-  { nome:"Nutricionista (preencha com o seu)", emoji:"🥗" },
-  { nome:"Médica Clínica (preencha com a sua)", emoji:"👩‍⚕️" },
+  { nome:"Nutricionista", emoji:"🥗" },
+  { nome:"Médica Clínica", emoji:"👩‍⚕️" },
   { nome:"A definir", cargo:"Ginecologista", registro:"", emoji:"🏥" },
   { nome:"A definir", cargo:"Psiquiatra", registro:"", emoji:"🧠" },
   { nome:"A definir", cargo:"Fisioterapeuta", registro:"", emoji:"🦴" },
@@ -364,7 +364,7 @@ export default function VidaEmOrdem() {
   const [stock,      setStock]      = useState(DEFAULT_STOCK);
   const [newStockItem, setNewStockItem] = useState({ name:"", qty:1, unit:"un", category:"despensa" });
   const [routine,    setRoutine]    = useState(() => { const o={}; WEEK_DAYS.forEach(d=>{ o[d.key]=[]; }); return o; });
-  const [newEvent,   setNewEvent]   = useState({ day:"segunda", time:"09:00", title:"", type:"trabalho", person:"thaynara" });
+  const [newEvent,   setNewEvent]   = useState({ day:"segunda", time:"09:00", title:"", type:"trabalho", person:"voce" });
   const [generatedList, setGeneratedList] = useState(null);
   const [generatingList,setGeneratingList]= useState(false);
   const [listObs,    setListObs]    = useState("");
@@ -1247,7 +1247,7 @@ Notas da revisão: ${Object.values(reviewNotes).filter(Boolean).join(" | ")||"ne
                         <div key={evt.id} style={{ display:"flex", alignItems:"center", gap:6, padding:"5px 8px", background:`${et.color}12`, borderRadius:7, borderLeft:`3px solid ${et.color}`, marginBottom:4 }}>
                           <span style={{ fontSize:11 }}>{et.emoji}</span>
                           <div style={{ fontSize:11, fontWeight:600, color:et.color }}>{evt.time} {evt.title}</div>
-                          <span style={{ fontSize:10, color:"#9A9082" }}>{evt.person==="thaynara"?"Thaynara":evt.person==="guilherme"?"Guilherme":"Ambos"}</span>
+                          <span style={{ fontSize:10, color:"#9A9082" }}>{evt.person==="voce"?"Você":evt.person==="parceiro"?"Parceiro(a)":"Ambos"}</span>
                         </div>
                       );
                     })
@@ -1443,7 +1443,7 @@ Notas da revisão: ${Object.values(reviewNotes).filter(Boolean).join(" | ")||"ne
                     {Object.entries(EVENT_TYPES).map(([k,v])=><option key={k} value={k}>{v.emoji} {v.label}</option>)}
                   </select>
                   <select value={newEvent.person} onChange={e=>setNewEvent(p=>({...p,person:e.target.value}))} style={inputSt()}>
-                    <option value="thaynara">Thaynara</option><option value="guilherme">Guilherme</option><option value="ambos">Ambos</option>
+                    <option value="voce">Você</option><option value="parceiro">Parceiro(a)</option><option value="ambos">Ambos</option>
                   </select>
                   <button onClick={addEvent} style={{ background:"#2C2C2A",color:"#F5EED8",border:"none",borderRadius:8,padding:"7px 14px",cursor:"pointer",fontSize:12,fontWeight:600,fontFamily:"'DM Sans',sans-serif" }}>+ Add</button>
                 </div>
@@ -1477,7 +1477,7 @@ Notas da revisão: ${Object.values(reviewNotes).filter(Boolean).join(" | ")||"ne
                               <span style={{ fontSize:11 }}>{et.emoji}</span>
                               <div style={{ flex:1,minWidth:0 }}>
                                 <div style={{ fontSize:11,fontWeight:600,color:et.color,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis" }}>{evt.time} {evt.title}</div>
-                                <div style={{ fontSize:10,color:"#9A9082" }}>{evt.person==="thaynara"?"Thaynara":evt.person==="guilherme"?"Guilherme":"Ambos"}</div>
+                                <div style={{ fontSize:10,color:"#9A9082" }}>{evt.person==="voce"?"Você":evt.person==="parceiro"?"Parceiro(a)":"Ambos"}</div>
                               </div>
                               <button onClick={()=>removeEvent(key,evt.id)} style={{ background:"none",border:"none",cursor:"pointer",color:"#C4A882",fontSize:14 }}>×</button>
                             </div>
@@ -1795,7 +1795,7 @@ Notas da revisão: ${Object.values(reviewNotes).filter(Boolean).join(" | ")||"ne
             <div className="panel-content" style={{ padding:0 }}>
               <div style={{ background:"linear-gradient(135deg,#639922,#4A7A18)", borderRadius:12, padding:"12px 16px", marginBottom:14, display:"flex", justifyContent:"space-between", alignItems:"center" }}>
                 <div>
-                  <div style={{ color:"#fff", fontWeight:700, fontSize:14 }}>🥗 Plano Nutri Isadora — Ciclagem de Carboidrato</div>
+                  <div style={{ color:"#fff", fontWeight:700, fontSize:14 }}>🥗 Plano Alimentar — Ciclagem de Carboidrato</div>
                   <div style={{ color:"rgba(255,255,255,0.8)", fontSize:11, marginTop:2 }}>LOW CARB: Seg, Sex, Dom | CARBO: Ter, Qua, Qui, Sáb</div>
                 </div>
                 <div style={{ display:"flex", gap:4 }}>

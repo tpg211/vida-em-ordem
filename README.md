@@ -163,7 +163,7 @@ Edit `vida-em-ordem.jsx` to make it yours:
 
 ## About
 
-Built by **[Thaynara Peixoto](https://github.com/tpg211)** — architect, project manager and triathlete from Goiânia, Brazil.
+Built by **[@tpg211](https://github.com/tpg211)** — architect, project manager and triathlete from Brazil.
 
 This is my personal system, open-sourced so others can fork it and build their own Life OS.
 
